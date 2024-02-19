@@ -9,7 +9,7 @@ def read(filename):
 
 setup(
     name="port-calibration",
-    version="0.1",
+    version="0.11",
     description="SIS calibration",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
