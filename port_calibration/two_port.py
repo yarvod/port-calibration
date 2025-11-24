@@ -126,6 +126,7 @@ class TwoPortCalibration:
         e11_r = (self.throw_sm22 - self.e33_r) / (
             self.throw_sm22 * self.e22_r - delta_e_r
         )
+        self.e11_r = e11_r
         self.e23e01_r = (self.throw_sm12 - self.e03_r) * (1 - self.e22_r * e11_r)
 
     def calibrate(self):
@@ -164,7 +165,7 @@ class TwoPortCalibration:
     def calc_S22(self, sm11, sm22, sm12, sm21):
         D = self.calc_D(sm11, sm22, sm12, sm21)
         a = (sm22 - self.e33_r) / self.e23e32_r
-        b = 1 + self.e22 * (sm22 - self.e00) / self.e10e01
+        b = 1 + self.e11 * (sm11 - self.e00) / self.e10e01
         c = (
             self.e11_r
             * ((sm21 - self.e30) / self.e10e32)

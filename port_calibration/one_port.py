@@ -40,6 +40,8 @@ class OnePortCalibration:
     def append_error_coeffs(self, vector):
         self.cals["D"].append(vector[1])
         self.cals["S"].append(vector[2])
+        # В линейной форме Gamma_m = D + (R - D*M)*Gamma + M*Gamma*Gamma_m,
+        # поэтому R = (E1) + D*M = vector[0] + vector[1]*vector[2]
         self.cals["R"].append(vector[0] + vector[1] * vector[2])
 
     def calibrate_measure(self, sm11):
