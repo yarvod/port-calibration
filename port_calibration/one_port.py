@@ -32,17 +32,18 @@ class OnePortCalibration:
 
     @staticmethod
     def calculate_error_matrix(C, V):
-        C_H = np.matrix.getH(C)
-        inv_CC_H = np.linalg.inv(np.dot(C_H, C))
-        result = np.dot(np.dot(inv_CC_H, C_H), V.T)
-        return result
+        return np.linalg.lstsq(C, V, rcond=None)[0]
 
-    def append_error_coeffs(self, vector):
-        self.cals["D"].append(vector[1])
-        self.cals["S"].append(vector[2])
+    def append_error_coeffs(self, x):
+        x = np.asarray(x).reshape(-1)  # (3,)
+        D = x[1]
+        S = x[2]
         # В линейной форме Gamma_m = D + (R - D*M)*Gamma + M*Gamma*Gamma_m,
         # поэтому R = (E1) + D*M = vector[0] + vector[1]*vector[2]
-        self.cals["R"].append(vector[0] + vector[1] * vector[2])
+        R = x[0] + D * S
+        self.cals["D"].append(D)
+        self.cals["S"].append(S)
+        self.cals["R"].append(R)
 
     def calibrate_measure(self, sm11):
         assert sm11 is not None, "Measure data should not be None!"

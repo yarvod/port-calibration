@@ -1,3 +1,5 @@
+import numpy as np
+
 from port_calibration import OnePortCalibration
 
 
@@ -108,10 +110,13 @@ class TwoPortCalibration:
         """STEP 2: Connect 50 Ohm to P1 and P2"""
 
         # P1: sm21 = e30
-        self.e30 = self.load_sm21
+        # self.e30 = self.load_sm21
+        self.e03_r = np.zeros_like(self.load_sm12)
 
         # P2: sm12 = e03_r
-        self.e03_r = self.load_sm12
+        # self.e03_r = self.load_sm12
+        self.e30 = np.zeros_like(self.load_sm21)
+        
 
     def _step_3(self):
         """STEP 3: Throw calibration"""
